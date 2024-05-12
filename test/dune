@@ -1,2 +1,14 @@
 (test
- (name test_composite))
+  (name test_category)
+  (modules test_category)
+  (libraries composite alcotest))
+
+(test
+  (name test_arrow)
+  (modules test_arrow)
+ (libraries composite alcotest))
+
+(test
+  (name test_arrow_choice)
+  (modules test_arrow_choice)
+  (libraries composite alcotest))

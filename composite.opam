@@ -5,13 +5,15 @@ description: "A longer description"
 maintainer: ["Maintainer Name"]
 authors: ["Author Name"]
 license: "LICENSE"
-tags: ["topics" "to describe" "your" "project"]
+tags: ["topics" "composition" "arrow"]
 homepage: "https://github.com/username/reponame"
 doc: "https://url/to/documentation"
 bug-reports: "https://github.com/username/reponame/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.12"}
+  "re"
+  "alcotest" {with-test}
   "odoc" {with-doc}
 ]
 build: [
