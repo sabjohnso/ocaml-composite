@@ -98,7 +98,6 @@ module type Comonad = sig
   include Basic_comonad
 end
 
-
 module type Minimal_trivial = sig
   type 'a t
   val wrap : 'a -> 'a t
@@ -113,4 +112,3 @@ module type Trivial = sig
   val extend : ('a t -> 'b) -> 'a t -> 'b t
   val duplicate : 'a t -> ('a t) t
 end
-
