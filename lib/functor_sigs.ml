@@ -84,6 +84,7 @@ end
 
 module type Minimal_comonad_duplicate = sig
   type 'a t
+  val fmap: ('a -> 'b) -> 'a t -> 'b t
   val extract : 'a t -> 'a
   val duplicate : 'a t -> ('a t) t
 end
@@ -96,6 +97,9 @@ end
 
 module type Comonad = sig
   include Basic_comonad
+  val wcompose : ('b t -> 'c) -> ('a t -> 'b) -> ('a t -> 'c)
+  val ( =<= ) : ('b t -> 'c) -> ('a t -> 'b) -> ('a t -> 'c)
+  val ( =>= ) : ('a t -> 'b) -> ('b t -> 'c) -> ('a t -> 'c)
 end
 
 module type Minimal_trivial = sig

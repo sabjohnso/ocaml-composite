@@ -16,7 +16,7 @@ let test_function_composition =
     Alcotest.(check int) "right-to-left associative" (((sqr >>> twc) >>> add1) 3) ((sqr >>> (twc >>> add1)) 3);
     ())
 
-let test_function_identity =  
+let test_function_identity =
   let open Function in
   (fun () ->
     Alcotest.(check int) "right-to-left left identity" ((add1 << id) 3) (add1 3);
@@ -24,7 +24,7 @@ let test_function_identity =
     Alcotest.(check int) "left--right left identity" ((add1 >> id) 3) (add1 3);
     Alcotest.(check int) "left-to-right right identity" ((id >> add1) 3) (add1 3);
   ())
-  
+
 let test_function_arr =
   let open Function in
   (fun () ->
@@ -74,7 +74,7 @@ let test_function_fanout =
     Alcotest.(check (pair int string))
       "fanout with infix"
       ((fanout (arr add1) (arr Int.to_string)) 3)
-      ((add1 &&& Int.to_string) 3);    
+      ((add1 &&& Int.to_string) 3);
     ())
 
 let test_composition = [
@@ -115,5 +115,3 @@ let () =
       "arrow split", test_split;
       "arrow fanout", test_fanout
     ]
-
-

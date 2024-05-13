@@ -89,6 +89,24 @@ module Monad_of_minimal_monad_join (M : Minimal_monad_join) = struct
   include Derived_monad_
 end
 
+module Basice_comonad_of_minimal_comonad_extend (M : Minimal_comonad_extend) = struct
+  include M
+  let fmap f wx = (extend (fun wx -> f (extract wx)) wx)
+  let duplicate wx = extend (fun x -> x) wx
+end
+
+module Basice_comonad_of_minimal_comonad_duplicate (M : Minimal_comonad_duplicate)= struct
+  include M
+  let extend f wx = fmap f (duplicate wx)
+end
+
+module Comonad_of_basic_comonad (M : Basic_comonad) = struct
+  include M
+  let wcompose f g wx = f (extend g wx)
+  let ( =<= ) = wcompose
+  let ( =>= ) g f = wcompose f g
+end
+
 module Trivial_of_minimal_trivial (M : Minimal_trivial) = struct
   include M
   module Derived_monad__ =

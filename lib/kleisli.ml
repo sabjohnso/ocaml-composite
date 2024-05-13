@@ -1,6 +1,5 @@
-
-module Kleisli (M : Functor_sigs.Monad) = struct
-  module Kleisli_arrow_choice  =
+module Make (M : Functor_sigs.Monad) = struct
+  module Derived_arrow_choice__  =
     Arrow_choice.Arrow_choice_of_minimal_arrow_choice_choose_split(
         struct
           include M
@@ -16,6 +15,6 @@ module Kleisli (M : Functor_sigs.Monad) = struct
             match mx with
             | Left x -> left <$> (f x)
             | Right y -> right <$> (g y)
-        end)
-  include Kleisli_arrow_choice
+        end)  
+  include Derived_arrow_choice__
 end
