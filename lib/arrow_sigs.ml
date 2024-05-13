@@ -18,6 +18,19 @@ module type Minimal_arrow_first = sig
   val first  : ('a, 'b) t -> ('a * 'c, 'b * 'c) t
 end
 
+module type Minimal_arrow_split_with_basic_category = sig
+  include Category_sigs.Basic_category
+  val arr    : ('a -> 'b) -> ('a, 'b) t
+  val split  : ('a, 'b) t -> ('c, 'd) t -> ('a * 'c, 'b * 'd) t
+end
+
+module type Minimal_arrow_first_with_basic_category = sig
+  include Category_sigs.Basic_category
+  val arr    : ('a -> 'b) -> ('a, 'b) t
+  val first  : ('a, 'b) t -> ('a * 'c, 'b * 'c) t
+end
+
+
 (** Signature for a minimal arrow requiring derivation of the
     remaining `Basic_arrow` methods from the `split` method.
  *)

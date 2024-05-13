@@ -32,3 +32,12 @@ module type Arrow_choice = sig
   val ( ||| ) : ('a, 'b) t -> ('c, 'b) t -> (('a, 'c) Either.t, 'b) t
 end
 
+module type Minimal_arrow_choice_choose_split = sig
+  include Arrow_sigs.Minimal_arrow_split_with_basic_category
+  val choose : ('a, 'b) t -> ('c, 'd) t -> (('a, 'c) Either.t, ('b, 'd) Either.t) t
+end
+
+module type Minimal_arrow_choice_choose_first = sig
+  include Arrow_sigs.Minimal_arrow_first_with_basic_category
+  val choose : ('a, 'b) t -> ('c, 'd) t -> (('a, 'c) Either.t, ('b, 'd) Either.t) t
+end

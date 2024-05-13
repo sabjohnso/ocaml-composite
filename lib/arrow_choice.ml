@@ -36,5 +36,42 @@ module Arrow_choice_of_basic_arrow_choice (M : Basic_arrow_choice) = struct
   let ( ||| ) = fanin
 end
 
+module Arrow_choice_of_minimal_arrow_choice_choose (M : Minimal_arrow_choice_choose) = struct
+  module Derived_arrow_choice =
+    Arrow_choice_of_basic_arrow_choice (
+        struct
+          module Temp = Basic_arrow_choice_of_minimal_arrow_choice_choose (M)
+          include Temp
+          include M
+      end)
+  include Derived_arrow_choice
+end
+           
 
 
+
+module Arrow_choice_of_minimal_arrow_choice_choose_split (M : Minimal_arrow_choice_choose_split) =
+  struct
+    module Derived_arrow_choice_ =
+      Arrow_choice_of_minimal_arrow_choice_choose (
+        struct
+          module Temp = Arrow.Arrow_of_minimal_arrow_split_with_basic_category (M)
+          include Temp
+          include M
+        end)
+    include Derived_arrow_choice_
+  end
+
+
+        
+module Arrow_choice_of_minimal_arrow_choice_choose_first (M : Minimal_arrow_choice_choose_first) =
+  struct
+    module Derived_arrow_choice_ =
+      Arrow_choice_of_minimal_arrow_choice_choose (
+        struct
+          module Temp = Arrow.Arrow_of_minimal_arrow_first_with_basic_category (M)
+          include Temp
+          include M
+        end)
+    include Derived_arrow_choice_
+  end
