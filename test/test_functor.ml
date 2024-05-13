@@ -10,7 +10,6 @@ let identity_testable (type a) (base_testable : a testable) : a identity testabl
     end in
   (module M :  TESTABLE with type t = M.t)
 
-
 let test_functor_derivation =
   (fun () ->
     let module M  =
