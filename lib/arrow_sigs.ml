@@ -1,6 +1,6 @@
 (** A signature for a module with the complete specification of the methods required
     for the arrow protocol. *)
-module type Basic_arrow = sig  
+module type Basic_arrow = sig
   include Category_sigs.Category
   val arr    : ('a -> 'b) -> ('a, 'b) t
   val first  : ('a, 'b) t -> ('a * 'c, 'b * 'c) t
@@ -18,12 +18,18 @@ module type Minimal_arrow_first = sig
   val first  : ('a, 'b) t -> ('a * 'c, 'b * 'c) t
 end
 
+(** The signature of a module with  minimal definitions for
+    deriving the remaining arrow operators from [split] using
+    [Arrow_of_minimal_arrow_split_with_basic_category]. *)
 module type Minimal_arrow_split_with_basic_category = sig
   include Category_sigs.Basic_category
   val arr    : ('a -> 'b) -> ('a, 'b) t
   val split  : ('a, 'b) t -> ('c, 'd) t -> ('a * 'c, 'b * 'd) t
 end
 
+(** The signature of a module with  minimal definitions for
+    deriving the remaining arrow operators from [first] with
+    [Arrow_of_minimal_arrow_first_with_basic_category]. *)
 module type Minimal_arrow_first_with_basic_category = sig
   include Category_sigs.Basic_category
   val arr    : ('a -> 'b) -> ('a, 'b) t
@@ -40,7 +46,7 @@ module type Minimal_arrow_split = sig
   val split  : ('a, 'b) t -> ('c, 'd) t -> ('a * 'c, 'b * 'd) t
 end
 
-(** A signature for the complete arrow module *)
+(** A signature for a complete arrow module *)
 module type Arrow = sig
   include Basic_arrow
   val ( <<< ) : ('b, 'c)t -> ('a, 'b) t -> ('a, 'c) t
@@ -48,4 +54,3 @@ module type Arrow = sig
   val ( *** ) : ('a, 'b) t -> ('c, 'd) t -> ('a * 'c, 'b * 'd) t
   val ( &&&)  : ('a, 'b) t -> ('a, 'd) t -> ('a, 'b * 'd) t
 end
-

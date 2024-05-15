@@ -30,13 +30,13 @@ module Arrow_of_basic_arrow (M : Basic_arrow)  = struct
 end
 
 module Arrow_of_minimal_arrow_split (M : Minimal_arrow_split) = struct
-  module Derived_basic_arrow  = Basic_arrow_of_minimal_arrow_split (M)  
+  module Derived_basic_arrow  = Basic_arrow_of_minimal_arrow_split (M)
   module Derived_arrow = Arrow_of_basic_arrow (Derived_basic_arrow)
   include Derived_arrow
 end
 
 module Arrow_of_minimal_arrow_first (M : Minimal_arrow_first) = struct
-  module Derived_basic_arrow  = Basic_arrow_of_minimal_arrow_first (M)  
+  module Derived_basic_arrow  = Basic_arrow_of_minimal_arrow_first (M)
   module Derived_arrow = Arrow_of_basic_arrow (Derived_basic_arrow)
   include Derived_arrow
 end
@@ -65,10 +65,6 @@ module Arrow_of_minimal_arrow_first_with_basic_category (M : Minimal_arrow_first
           include Temp
           include M
         end)
-  
+
   include Derived_arrow_
 end
-
-
-
-
