@@ -20,7 +20,7 @@ module Applicative_of_minimal_applicative_fapply (M : Minimal_applicative_fapply
           include M
           let fmap f mx = fapply (pure f) mx
         end
-      )  
+      )
   include Derived_functor_
   include M
   let ( <*> ) = fapply
@@ -43,9 +43,8 @@ module Monad_of_basic_monad (M : Basic_monad) = struct
   let flatmap f mx = bind mx f
   let ( >>= ) = bind
   let ( =<< ) = flatmap
-  let ( <=< ) f g mx = bind (bind mx g) f
+  let ( <=< ) f g x = bind (bind (return x) g) f
   let ( >=> ) g f = f <=< g
-  
   let ( let* ) mx f = bind mx f
   let ( let+ ) mx f= fmap f mx
   let ( and+ ) = product
@@ -59,7 +58,7 @@ module Basic_monad_of_minimal_monad_bind (M : Minimal_monad_bind) = struct
           include M
           let fapply mf mx = bind mf (fun f -> bind mx (fun x -> pure (f x)))
         end)
-  
+
   include Derived_applicative_
   let join mmx = bind mmx (fun mx -> mx)
 end
@@ -89,13 +88,13 @@ module Monad_of_minimal_monad_join (M : Minimal_monad_join) = struct
   include Derived_monad_
 end
 
-module Basice_comonad_of_minimal_comonad_extend (M : Minimal_comonad_extend) = struct
+module Basic_comonad_of_minimal_comonad_extend (M : Minimal_comonad_extend) = struct
   include M
   let fmap f wx = (extend (fun wx -> f (extract wx)) wx)
   let duplicate wx = extend (fun x -> x) wx
 end
 
-module Basice_comonad_of_minimal_comonad_duplicate (M : Minimal_comonad_duplicate)= struct
+module Basic_comonad_of_minimal_comonad_duplicate (M : Minimal_comonad_duplicate)= struct
   include M
   let extend f wx = fmap f (duplicate wx)
 end
@@ -107,15 +106,26 @@ module Comonad_of_basic_comonad (M : Basic_comonad) = struct
   let ( =>= ) g f = wcompose f g
 end
 
+module Comonad_of_minimal_comonad_extend (M: Minimal_comonad_extend) = struct
+  include M
+  module Derived_comonad = Comonad_of_basic_comonad(Basic_comonad_of_minimal_comonad_extend (M))
+  include Derived_comonad
+end
+
+module Comonad_of_minimal_comonad_duplicate (M: Minimal_comonad_duplicate) = struct
+  include M
+  module Derived_comonad = Comonad_of_basic_comonad(Basic_comonad_of_minimal_comonad_duplicate (M))
+  include Derived_comonad
+end
+
 module Trivial_of_minimal_trivial (M : Minimal_trivial) = struct
   include M
   module Derived_monad__ =
-    Monad_of_minimal_monad_join (
+    Monad_of_minimal_monad_bind (
         struct
           include M
-          let fmap f mx = wrap (f (unwrap mx))
           let pure x = wrap x
-          let join mmx = unwrap mmx
+          let bind mx f = f (unwrap mx)
         end)
   include Derived_monad__
   let extract = unwrap
