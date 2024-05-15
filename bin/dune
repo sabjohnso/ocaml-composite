@@ -1,4 +1,0 @@
-(executable
- (public_name composite)
- (name main)
- (libraries composite re))
