@@ -1,5 +1,3 @@
 (library
- (inline_tests)
  (name composite)
- (preprocess
-  (pps ppx_inline_test)))
+ (public_name composite))
